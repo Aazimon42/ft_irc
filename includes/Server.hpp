@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:28:03 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/06/12 17:52:19 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/06/12 20:51:04 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ class Server
     public:
         Server(int port, std::string password);
         ~Server();
-        void start(int port, std::string password);
+        void start();
         void run();
     private:
         int running;
         int fd;
         int port;
         std::string password;
+        std::vector<struct pollfd> pollfds;
         std::vector<Client&> clients;
 };
 
