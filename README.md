@@ -1,2 +1,2 @@
-# webserv
-42 project Webserv
+# ft_irc
+42 project ft_irc

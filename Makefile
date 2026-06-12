@@ -6,13 +6,13 @@
 #    By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/10 00:00:50 by edi-maio          #+#    #+#              #
-#    Updated: 2026/06/10 00:02:24 by edi-maio         ###   ########.fr        #
+#    Updated: 2026/06/12 16:49:32 by edi-maio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CPP=c++
 CPPFLAGS = -Wall -Werror -Wextra -g -std=c++98
-NAME = webserv
+NAME = ircserv
 SRC_DIR = srcs/
 SRCS = $(SRC_DIR)main.cpp
 
