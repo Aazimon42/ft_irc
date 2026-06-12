@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/12 16:55:40 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/06/12 17:24:28 by edi-maio         ###   ########.fr       */
+/*   Created: 2026/06/12 17:45:06 by edi-maio          #+#    #+#             */
+/*   Updated: 2026/06/12 17:56:52 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/irc.hpp"
+#ifndef CHANNEL_HPP
+# define CHANNEL_HPP
 
-int main(int ac, char **av)
+# include "irc.hpp"
+# include "Client.hpp"
+
+class Channel
 {
-    if (ac != 3)
-    {
-        std::cerr << "Usage: ./ircserv <port> <password>" << std::endl;
-        return (1);
-    }
-    if (!parsing(av[1]))
-        return (1);
-    return (0);
-}
+    public:
+        Channel();
+        ~Channel();
+    private:
+        bool invite_only;
+        int max_users;
+        std::string name;
+        std::string topic;
+        std::string password;
+        std::vector<Client&> operators;
+        std::vector<Client&> clients;
+};
+
+#endif

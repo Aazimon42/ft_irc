@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/12 16:55:40 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/06/12 17:24:28 by edi-maio         ###   ########.fr       */
+/*   Created: 2026/06/12 17:35:18 by edi-maio          #+#    #+#             */
+/*   Updated: 2026/06/12 17:36:04 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/irc.hpp"
+#ifndef CLIENT_HPP
+# define CLIENT_HPP
 
-int main(int ac, char **av)
+# include "irc.hpp"
+
+class Client
 {
-    if (ac != 3)
-    {
-        std::cerr << "Usage: ./ircserv <port> <password>" << std::endl;
-        return (1);
-    }
-    if (!parsing(av[1]))
-        return (1);
-    return (0);
-}
+    public:
+        Client();
+        ~Client();
+    private:
+        int fd;
+        std::string nickname;
+        std::string username;
+        std::string realname;
+};
+
+#endif

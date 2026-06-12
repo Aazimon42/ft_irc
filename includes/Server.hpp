@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/12 16:55:40 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/06/12 17:24:28 by edi-maio         ###   ########.fr       */
+/*   Created: 2026/06/12 17:28:03 by edi-maio          #+#    #+#             */
+/*   Updated: 2026/06/12 17:52:19 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/irc.hpp"
+#ifndef SERVER_HPP
+# define SERVER_HPP
 
-int main(int ac, char **av)
+# include "irc.hpp"
+# include "Client.hpp"
+
+class Server
 {
-    if (ac != 3)
-    {
-        std::cerr << "Usage: ./ircserv <port> <password>" << std::endl;
-        return (1);
-    }
-    if (!parsing(av[1]))
-        return (1);
-    return (0);
-}
+    public:
+        Server(int port, std::string password);
+        ~Server();
+        void start(int port, std::string password);
+        void run();
+    private:
+        int running;
+        int fd;
+        int port;
+        std::string password;
+        std::vector<Client&> clients;
+};
+
+#endif
