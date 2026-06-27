@@ -14,7 +14,10 @@ CPP=c++
 CPPFLAGS = -Wall -Werror -Wextra -g -std=c++98
 NAME = ircserv
 SRC_DIR = srcs/
-SRCS = $(SRC_DIR)main.cpp
+SRCS = $(SRC_DIR)main.cpp \
+		$(SRC_DIR)Client.cpp \
+		$(SRC_DIR)Server.cpp \
+		$(SRC_DIR)parsing.cpp
 
 OBJ_DIR = objs/
 OBJS = $(SRCS:$(SRC_DIR)%.cpp=$(OBJ_DIR)%.o)

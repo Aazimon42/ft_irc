@@ -12,19 +12,18 @@
 
 #ifndef CLIENT_HPP
 # define CLIENT_HPP
-
 # include "irc.hpp"
-
 class Client
 {
     public:
         Client();
+        Client(int afd);
         ~Client();
+        int getFd(void);
     private:
         int fd;
         std::string nickname;
         std::string username;
-        std::string realname;
 };
 
 #endif

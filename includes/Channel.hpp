@@ -27,8 +27,8 @@ class Channel
         std::string name;
         std::string topic;
         std::string password;
-        std::vector<Client&> operators;
-        std::vector<Client&> clients;
+        std::vector<Client*> operators;
+        std::vector<Client*> clients;
 };
 
 #endif

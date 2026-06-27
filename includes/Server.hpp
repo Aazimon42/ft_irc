@@ -16,13 +16,17 @@
 # include "irc.hpp"
 # include "Client.hpp"
 # include <poll.h>
+
 class Server
 {
     public:
         Server(int port, std::string password);
         ~Server();
-        void start();
+        void init();
         void run();
+        void acceptClient();
+        void handleClientData(int i);
+        void disconnectClient(int i);
     private:
         int running;
         int fd;

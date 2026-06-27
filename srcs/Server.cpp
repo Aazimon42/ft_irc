@@ -18,8 +18,9 @@ Server::Server(int port, std::string password)
     this->port = port;
     this->password = password;
 }
-
-void Server::start()
+Server::~Server()
+{}
+void Server::init()
 {
     this->running = 1;
     this->fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -53,7 +54,7 @@ void Server::run()
 		{
             throw IrcException("Error: Failed to Poll");
 		}
-        for (int i = 0; i < pollfds.size(); i++)
+        for (unsigned long i = 0; i < pollfds.size(); i++)
         {
             if (pollfds[i].revents & POLLIN)
             {
@@ -66,4 +67,53 @@ void Server::run()
                 disconnectClient(i);
         }
     }
+}
+
+void Server::acceptClient()
+{
+    int client_fd = accept(this->fd, NULL, NULL);
+    if (client_fd < 0)  
+        return ;
+    fcntl(client_fd, F_SETFL, O_NONBLOCK);
+    Client *client = new Client(client_fd);
+    this->clients.push_back(client);
+        struct pollfd pfd;
+    pfd.fd = client_fd;
+    pfd.events = POLLIN;
+    pfd.revents = 0;
+    this->pollfds.push_back(pfd);
+    std::cout << "nouveau client"<< std::endl;
+}
+
+void Server::handleClientData(int i)
+{
+    char buffer[512];
+    std::memset(buffer, 0, sizeof(buffer));
+
+    int n = recv(pollfds[i].fd, buffer, sizeof(buffer) - 1, 0);
+
+    if (n <= 0)
+    {
+        disconnectClient(i);
+        return ;
+    }
+    buffer[n] = '\0';
+    std::cout << "Received from fd " << pollfds[i].fd << ": " << buffer;
+}
+
+void Server::disconnectClient(int i)
+{
+    int client_fd = pollfds[i].fd;
+    close(client_fd);
+
+    for (size_t j = 0; j < clients.size(); j++)
+    {
+        if (clients[j]->getFd() == client_fd)
+        {
+            delete clients[j];
+            clients.erase(clients.begin() + j);
+            break;
+        }
+    }
+    pollfds.erase(pollfds.begin() + i);
 }
