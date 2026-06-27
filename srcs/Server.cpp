@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:31:13 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/06/12 22:23:46 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/06/27 22:41:01 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void Server::start()
     this->running = 1;
     this->fd = socket(AF_INET, SOCK_STREAM, 0);
     if (fd == -1)
-        throw std::runtime_error("Error: Failed to create socket");
+        throw IrcException("Error: Failed to create socket");
     int opt = 1;
     setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
     struct sockaddr_in addr;
@@ -33,11 +33,11 @@ void Server::start()
 	addr.sin_addr.s_addr = INADDR_ANY;
     addr.sin_port = htons(port);
     if (bind(fd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
-        throw std::runtime_error("Error: Failed to bind socket");
+        throw IrcException("Error: Failed to bind socket");
     if (listen(fd, 16) < 0)
-		throw std::runtime_error("Error: Failed to listen on socket");
+		throw IrcException("Error: Failed to listen on socket");
     if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0)
-        throw std::runtime_error("Error: Failed to set non-blocking");
+        throw IrcException("Error: Failed to set non-blocking");
     struct pollfd pfd;
     pfd.fd = fd;
     pfd.events = POLLIN;
@@ -49,12 +49,21 @@ void Server::run()
 {
     while (running)
     {
+        if (poll(&pollfds[0], pollfds.size(), -1) < 0)
+		{
+            throw IrcException("Error: Failed to Poll");
+		}
         for (int i = 0; i < pollfds.size(); i++)
         {
-            char buf[4096];
-            if (pollfds[i].revents)
-                recv(pollfds[i].fd, buf, 4095, 0);
-            
+            if (pollfds[i].revents & POLLIN)
+            {
+                if (pollfds[i].fd == this->fd)
+                    acceptClient();
+                else
+                    handleClientData(i);
+            }
+            if (pollfds[i].revents & (POLLHUP | POLLERR))
+                disconnectClient(i);
         }
     }
 }

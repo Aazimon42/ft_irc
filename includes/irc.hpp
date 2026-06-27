@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:00:01 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/06/12 20:52:10 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/06/27 22:40:41 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@
 # include <sys/socket.h>
 # include <netinet/in.h>
 
-struct pollfd
+class IrcException : public std::exception
 {
-    int fd;
-    short events;
-    short revents;
+    private:
+        std::string msg;
+    public:
+        IrcException(std::string const &msg) : msg(msg) {}
+        ~IrcException() throw() {}
+        const char *what() const throw() { return msg.c_str(); }
 };
-
 int parsing(char *str);
 
 #endif

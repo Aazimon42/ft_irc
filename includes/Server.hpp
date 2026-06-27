@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:28:03 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/06/12 20:51:04 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/06/27 22:40:14 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "irc.hpp"
 # include "Client.hpp"
-
+# include <poll.h>
 class Server
 {
     public:
@@ -29,7 +29,7 @@ class Server
         int port;
         std::string password;
         std::vector<struct pollfd> pollfds;
-        std::vector<Client&> clients;
+        std::vector<Client*> clients;
 };
 
 #endif
