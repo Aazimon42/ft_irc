@@ -98,7 +98,18 @@ void Server::handleClientData(int i)
         return ;
     }
     buffer[n] = '\0';
+    handle_input(i, buffer);
     std::cout << "Received from fd " << pollfds[i].fd << ": " << buffer;
+}
+
+Client *Server::getClientFromFd(int fd)
+{
+    for (size_t i = 0; i < clients.size(); i++)
+    {
+        if (clients[i]->getFd() == fd)
+            return clients[i];
+    }
+    return NULL;
 }
 
 void Server::disconnectClient(int i)

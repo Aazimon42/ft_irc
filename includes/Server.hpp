@@ -27,6 +27,7 @@ class Server
         void acceptClient();
         void handleClientData(int i);
         void disconnectClient(int i);
+        Client *getClientFromFd(int fd)
     private:
         int running;
         int fd;
