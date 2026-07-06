@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/irc.hpp"
+#include "../includes/Server.hpp"
 
 int main(int ac, char **av)
 {

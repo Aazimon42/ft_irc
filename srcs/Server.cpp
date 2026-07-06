@@ -98,7 +98,7 @@ void Server::handleClientData(int i)
         return ;
     }
     buffer[n] = '\0';
-    handle_input(i, buffer);
+    //handle_input(i, buffer);
     std::cout << "Received from fd " << pollfds[i].fd << ": " << buffer;
 }
 

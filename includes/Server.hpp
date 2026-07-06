@@ -13,10 +13,9 @@
 #ifndef SERVER_HPP
 # define SERVER_HPP
 
-# include "irc.hpp"
 # include "Client.hpp"
 # include <poll.h>
-
+# include "irc.hpp"
 class Server
 {
     public:
@@ -27,7 +26,7 @@ class Server
         void acceptClient();
         void handleClientData(int i);
         void disconnectClient(int i);
-        Client *getClientFromFd(int fd)
+        Client *getClientFromFd(int fd);
     private:
         int running;
         int fd;
