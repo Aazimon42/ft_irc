@@ -6,12 +6,12 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 16:55:40 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/06/12 17:24:28 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/08 16:12:40 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/irc.hpp"
-#include "../includes/Server.hpp"
+#include "irc.hpp"
+#include "Server.hpp"
 
 int main(int ac, char **av)
 {

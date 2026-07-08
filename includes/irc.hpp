@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:00:01 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/06/27 22:40:41 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/08 16:31:19 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ class IrcException : public std::exception
         const char *what() const throw() { return msg.c_str(); }
 };
 int parsing(char *str);
+std::vector<std::string> split(const std::string &str, char delim);
 
 #endif

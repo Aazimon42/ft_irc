@@ -6,15 +6,15 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 16:11:39 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/06 17:17:03 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/08 17:14:53 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/Channel.hpp"
+#include "Channel.hpp"
 
 Channel::Channel(std::string name, Client* creator)
 {
-    name = name;
+    this->name = name;
     clients.push_back(creator);
     operators.push_back(creator);
     max_users = 0;
@@ -33,4 +33,19 @@ void Channel::broadcast(const std::string& message, Client* sender)
             send(client->getFd(), message.c_str(), message.length(), 0);
         }
     }
+}
+
+void Channel::addClient(Client* client)
+{
+    clients.push_back(client);
+}
+
+std::string Channel::getPass()
+{
+    return password;
+}
+
+std::string Channel::getName()
+{
+    return name;
 }

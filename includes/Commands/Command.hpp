@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Client.hpp                                         :+:      :+:    :+:   */
+/*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/12 17:35:18 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/08 17:13:51 by edi-maio         ###   ########.fr       */
+/*   Created: 2026/07/08 16:10:07 by edi-maio          #+#    #+#             */
+/*   Updated: 2026/07/08 17:18:44 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLIENT_HPP
-# define CLIENT_HPP
+#ifndef COMMAND_HPP
+# define COMMAND_HPP
 
-# include <iostream>
+# include "Client.hpp"
+# include <vector>
 
-class Channel;
 class Server;
 
-class Client
+class Command
 {
     public:
-        Client();
-        Client(int afd);
-        ~Client();
-        int getFd(void);
-        std::string getUsername(void);
-        void join(std::string channel, std::string key);
-    private:
-        int fd;
-        std::string nickname;
-        std::string username;
+        Command(Server *server, Client *client, std::vector<std::string> args);
+        virtual ~Command();
+        virtual void execute() = 0;
+    protected:
         Server *server;
+        Client *client;
+        std::vector<std::string> args;
 };
 
 #endif

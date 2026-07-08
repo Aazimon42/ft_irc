@@ -6,11 +6,11 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:18:54 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/06/12 17:24:22 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/08 16:12:45 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/irc.hpp"
+#include "irc.hpp"
 
 static int port_parser(char *str)
 {

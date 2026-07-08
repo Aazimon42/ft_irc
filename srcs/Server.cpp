@@ -6,11 +6,11 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:31:13 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/06/27 22:41:01 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/08 17:08:14 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/Server.hpp"
+#include "Server.hpp"
 
 Server::Server(int port, std::string password)
 {
@@ -98,8 +98,30 @@ void Server::handleClientData(int i)
         return ;
     }
     buffer[n] = '\0';
-    //handle_input(i, buffer);
+    handle_input(i, buffer);
     std::cout << "Received from fd " << pollfds[i].fd << ": " << buffer;
+}
+
+Command *Server::handle_input(int i, char *buffer)
+{
+    std::string commands[12] = {"JOIN"};
+    int command = 0;
+    Client *client = getClientFromFd(pollfds[i].fd);
+    std::vector<std::string> args = split(buffer, ' ');
+    while (command < 12)
+    {
+        if (commands[command] == buffer)
+            break;
+        command++;
+    }
+    switch (command)
+    {
+        case (0):
+            return new JoinCommand(this, client, args);
+        default:
+            std::cout << "Unknown command: " << command << std::endl;
+            return (NULL);
+    }
 }
 
 Client *Server::getClientFromFd(int fd)
@@ -108,6 +130,16 @@ Client *Server::getClientFromFd(int fd)
     {
         if (clients[i]->getFd() == fd)
             return clients[i];
+    }
+    return NULL;
+}
+
+Channel *Server::getChannel(std::string name)
+{
+    for (size_t i = 0; i < channels.size(); i++)
+    {
+        if (channels[i]->getName() == name)
+            return channels[i];
     }
     return NULL;
 }
