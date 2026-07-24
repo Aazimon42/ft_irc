@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:31:13 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/08 17:08:14 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/25 00:27:11 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void Server::handleClientData(int i)
 
 Command *Server::handle_input(int i, char *buffer)
 {
-    std::string commands[12] = {"JOIN"};
+    std::string commands[12] = {"JOIN", "PASS", "NICK", "USER", "QUIT", "PRIVMSG", "NOTICE", "MODE", "TOPIC", "INVITE", "KICK", "PART"};
     int command = 0;
     Client *client = getClientFromFd(pollfds[i].fd);
     std::vector<std::string> args = split(buffer, ' ');
@@ -118,6 +118,28 @@ Command *Server::handle_input(int i, char *buffer)
     {
         case (0):
             return new JoinCommand(this, client, args);
+        case (1):
+            return new PassCommand(this, client, args);
+        case (2):
+            return new NickCommand(this, client, args);
+        case (3):
+            return new UserCommand(this, client, args);
+        case (4):
+            return new QuitCommand(this, client, args);
+        case (5):
+            return new PrivmsgCommand(this, client, args);
+        case (6):
+            return new NoticeCommand(this, client, args);
+        case (7):
+            return new ModeCommand(this, client, args);
+        case (8):
+            return new TopicCommand(this, client, args);
+        case (9):
+            return new InviteCommand(this, client, args);
+        case (10):
+            return new KickCommand(this, client, args);
+        case (11):
+            return new PartCommand(this, client, args);
         default:
             std::cout << "Unknown command: " << command << std::endl;
             return (NULL);

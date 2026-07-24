@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:28:03 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/08 17:17:42 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/25 00:04:14 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@
 # include "irc.hpp"
 # include "Commands/Command.hpp"
 # include "Commands/JoinCommand.hpp"
+# include "Commands/PassCommand.hpp"
+# include "Commands/ModeCommand.hpp"
+# include "Commands/TopicCommand.hpp"
+# include "Commands/UserCommand.hpp"
+# include "Commands/NickCommand.hpp"
+# include "Commands/PrivmsgCommand.hpp"
+# include "Commands/PartCommand.hpp"
+# include "Commands/QuitCommand.hpp"
+# include "Commands/InviteCommand.hpp"
+# include "Commands/KickCommand.hpp"
+# include "Commands/NoticeCommand.hpp"
 # include "Channel.hpp"
 
 class Server
