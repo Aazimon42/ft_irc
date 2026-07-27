@@ -6,7 +6,7 @@
 #    By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/10 00:00:50 by edi-maio          #+#    #+#              #
-#    Updated: 2026/07/08 17:22:13 by edi-maio         ###   ########.fr        #
+#    Updated: 2026/07/27 19:17:13 by malebrun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,15 @@ SRCS = $(SRC_DIR)main.cpp \
 		$(SRC_DIR)utils.cpp \
 		$(SRC_DIR)Channel.cpp \
 		$(SRC_DIR)Commands/Command.cpp \
-		$(SRC_DIR)Commands/JoinCommand.cpp
+		$(SRC_DIR)Commands/JoinCommand.cpp \
+		$(SRC_DIR)Commands/PassCommand.cpp \
+        $(SRC_DIR)Commands/NickCommand.cpp \
+        $(SRC_DIR)Commands/UserCommand.cpp \
+        $(SRC_DIR)Commands/QuitCommand.cpp \
+        $(SRC_DIR)Commands/PrivmsgCommand.cpp \
+        $(SRC_DIR)Commands/ModeCommand.cpp \
+        $(SRC_DIR)Commands/TopicCommand.cpp \
+        $(SRC_DIR)Commands/PartCommand.cpp
 
 OBJ_DIR = objs/
 OBJS = $(SRCS:$(SRC_DIR)%.cpp=$(OBJ_DIR)%.o)
