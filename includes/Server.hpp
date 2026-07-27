@@ -40,7 +40,7 @@ class Server
         void run();
         void acceptClient();
         void handleClientData(int i);
-        Command *handle_input(int i, char *buffer);
+        Command *handle_input(int i, std::string todo);
         void disconnectClient(int i);
         Client *getClientFromFd(int fd);
         Client *getClientFromUser(std::string name);

@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 17:08:39 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/28 00:35:04 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/28 00:50:38 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,14 @@ Client::~Client()
 int Client::getFd()
 {
     return (this->fd);
+}
+
+void Client::join(std::string channelName, std::string key)
+{
+    Channel *channel = server->getChannel(channelName);
+    if (channel->getPass() == key)
+    {
+        channel->addClient(this);
+    }
+    //ajouter message d'erreur a envoyer au client
 }

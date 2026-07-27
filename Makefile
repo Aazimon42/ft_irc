@@ -30,7 +30,10 @@ SRCS = $(SRC_DIR)main.cpp \
         $(SRC_DIR)Commands/PrivmsgCommand.cpp \
         $(SRC_DIR)Commands/ModeCommand.cpp \
         $(SRC_DIR)Commands/TopicCommand.cpp \
-        $(SRC_DIR)Commands/PartCommand.cpp
+        $(SRC_DIR)Commands/PartCommand.cpp \
+		$(SRC_DIR)Commands/NoticeCommand.cpp \
+        $(SRC_DIR)Commands/InviteCommand.cpp \
+        $(SRC_DIR)Commands/KickCommand.cpp
 
 OBJ_DIR = objs/
 OBJS = $(SRCS:$(SRC_DIR)%.cpp=$(OBJ_DIR)%.o)

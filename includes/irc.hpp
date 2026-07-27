@@ -35,5 +35,6 @@ class IrcException : public std::exception
 };
 int parsing(char *str);
 std::vector<std::string> split(const std::string &str, char delim);
+std::vector<std::string> parsecmd(const std::string &line);
 
 #endif
