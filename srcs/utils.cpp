@@ -25,3 +25,29 @@ std::vector<std::string> split(const std::string &str, char delim)
 
     return tokens;
 }
+
+std::vector<std::string> parsecmd(const std::string &line)
+{
+	std::vector<std::string>	tokens;
+	size_t						i;
+	size_t						start;
+
+	i = 0;
+	while (i < line.length())
+	{
+		while (i < line.length() && line[i] == ' ')
+			i++;
+		if (i >= line.length())
+			break ;
+		if (line[i] == ':')
+		{
+			tokens.push_back(line.substr(i + 1));
+			return (tokens);
+		}
+		start = i;
+		while (i < line.length() && line[i] != ' ')
+			i++;
+		tokens.push_back(line.substr(start, i - start));
+	}
+	return (tokens);
+}
