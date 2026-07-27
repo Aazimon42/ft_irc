@@ -88,30 +88,48 @@ void Server::acceptClient()
 
 void Server::handleClientData(int i)
 {
-    char buffer[512];
-    std::memset(buffer, 0, sizeof(buffer));
+	char	buffer[512];
+	ssize_t	n;
+	std::string	line;
+	size_t		pos;
 
-    int n = recv(pollfds[i].fd, buffer, sizeof(buffer) - 1, 0);
-
-    if (n <= 0)
-    {
-        disconnectClient(i);
-        return ;
-    }
-    buffer[n] = '\0';
-    handle_input(i, buffer);
-    std::cout << "Received from fd " << pollfds[i].fd << ": " << buffer;
+	n = recv(pollfds[i].fd, buffer, sizeof(buffer), 0);
+	if (n <= 0)
+	{
+		disconnectClient(i);
+		return ;
+	}
+	std::cout << "Received from fd " << pollfds[i].fd << ": " << std::string(buffer, n);
+	Client *client = getClientFromFd(pollfds[i].fd);
+	if (!client)
+		return ;
+	client->_inBuffer.append(buffer, n);
+	while ((pos = client->_inBuffer.find('\n')) != std::string::npos)
+	{
+		line = client->_inBuffer.substr(0, pos);
+		client->_inBuffer.erase(0, pos + 1);
+		if (!line.empty() && line[line.length() - 1] == '\r')
+			line.erase(line.length() - 1);
+		if (!line.empty())
+			handle_input(i, line);
+	}
 }
 
-Command *Server::handle_input(int i, char *buffer)
+Command *Server::handle_input(int i, std::string todo)
 {
     std::string commands[12] = {"JOIN", "PASS", "NICK", "USER", "QUIT", "PRIVMSG", "NOTICE", "MODE", "TOPIC", "INVITE", "KICK", "PART"};
     int command = 0;
     Client *client = getClientFromFd(pollfds[i].fd);
-    std::vector<std::string> args = split(buffer, ' ');
+    std::vector<std::string> args = parsecmd(todo);
+    unsigned long j = 0;
+    while (j < args.size())
+    {
+        std::cout << "ARG " << j << " = " << args[j] << std::endl; 
+        j++;
+    }
     while (command < 12)
     {
-        if (commands[command] == buffer)
+        if (commands[command] == args[0])
             break;
         command++;
     }
@@ -142,7 +160,7 @@ Command *Server::handle_input(int i, char *buffer)
         case (11):
             return new PartCommand(this, client, args);
         default:
-            std::cout << "Unknown command: " << command << std::endl;
+            std::cout << "Unknown command :                       "  << args[0] << std::endl;
             return (NULL);
     }
 }

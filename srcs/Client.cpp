@@ -38,5 +38,9 @@ void Client::join(std::string channelName, std::string key)
     {
         channel->addClient(this);
     }
-    //ajouter message d'erreur a envoyer au client
+}
+
+std::string Client::getUsername(void)
+{
+	return (this->username);
 }

@@ -21,6 +21,7 @@ class Server;
 class Client
 {
     public:
+        std::string _inBuffer;
         Client();
         Client(int afd);
         ~Client();
