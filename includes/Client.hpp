@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:35:18 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/08 17:13:51 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/28 00:35:11 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ class Client
         ~Client();
         int getFd(void);
         std::string getUsername(void);
-        void join(std::string channel, std::string key);
     private:
         int fd;
         std::string nickname;

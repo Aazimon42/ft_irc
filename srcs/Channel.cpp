@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 16:11:39 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/27 21:27:23 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/28 00:47:25 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void Channel::broadcast(const std::string& message, Client* sender)
 
 void Channel::addClient(Client* client)
 {
-    clients.push_back(client);
+    if (!isInChannel(client))
+        clients.push_back(client);
 }
 
 void Channel::addInvited(Client* client)
@@ -54,6 +55,26 @@ std::string Channel::getPass()
 std::string Channel::getName()
 {
     return name;
+}
+
+std::string Channel::getTopic()
+{
+    return topic;
+}
+
+std::string Channel::getUsers()
+{
+    std::string users;
+    for (std::vector<Client*>::iterator it = clients.begin(); it != clients.end(); ++it)
+    {
+        Client* client = *it;
+        if (isOperator(client))
+            users += "@";
+        users += client->getUsername();
+        if (it + 1 != clients.end())
+            users += " ";
+    }
+    return users;
 }
 
 bool Channel::isInviteOnly()

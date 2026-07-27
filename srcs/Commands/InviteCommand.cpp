@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 00:00:00 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/27 21:30:29 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/28 00:15:49 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,37 +21,41 @@ InviteCommand::~InviteCommand()
 
 void InviteCommand::execute()
 {
-    if (args.size() < 2)
+    if (args.size() < 3)
     {
         server->sendError(client->getFd(), 461, client->getUsername(), "INVITE");
         return;
     }
-    Client *target = server->getClientFromFd(std::atoi(args[0].c_str()));
+    Client *target = server->getClientFromUser(args[1]);
     if (!target)
     {
-        server->sendError(client->getFd(), 401, client->getUsername(), args[0]);
+        server->sendError(client->getFd(), 401, client->getUsername(), args[1]);
         return;
     }
-    Channel *channel = server->getChannel(args[1]);
+    Channel *channel = server->getChannel(args[2]);
     if (!channel)
     {
-        server->sendError(client->getFd(), 403, client->getUsername(), args[1]);
+        server->sendError(client->getFd(), 403, client->getUsername(), args[2]);
         return;
     }
     if (!channel->isInChannel(client))
     {
-        server->sendError(client->getFd(), 442, client->getUsername(), args[1]);
+        server->sendError(client->getFd(), 442, client->getUsername(), args[2]);
         return;
     }
     if (channel->isInChannel(target))
     {
-        server->sendError(client->getFd(), 443, client->getUsername(), args[1]);
+        server->sendError(client->getFd(), 443, client->getUsername(), args[2]);
         return;
     }
     if (channel->isInviteOnly() && !channel->isOperator(client))
     {
-        server->sendError(client->getFd(), 482, client->getUsername(), args[1]);
+        server->sendError(client->getFd(), 482, client->getUsername(), args[2]);
         return;
     }
     channel->addInvited(target);
+    std::string inviteMessage = ":server 341 " + client->getUsername() + " " + target->getUsername() + " " + channel->getName() + "\r\n";
+    send(client->getFd(), inviteMessage.c_str(), inviteMessage.length(), 0);
+    inviteMessage = ":" + client->getUsername() + " INVITE " + target->getUsername() + " :" + channel->getName() + "\r\n";
+    send(target->getFd(), inviteMessage.c_str(), inviteMessage.length(), 0);
 }

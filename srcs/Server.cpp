@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:31:13 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/27 21:34:37 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/28 00:35:12 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,16 @@ Client *Server::getClientFromFd(int fd)
     return NULL;
 }
 
+Client *Server::getClientFromUser(std::string name)
+{
+    for (size_t i = 0; i < clients.size(); i++)
+    {
+        if (clients[i]->getUsername() == name)
+            return clients[i];
+    }
+    return NULL;
+}
+
 Channel *Server::getChannel(std::string name)
 {
     for (size_t i = 0; i < channels.size(); i++)
@@ -165,6 +175,13 @@ Channel *Server::getChannel(std::string name)
             return channels[i];
     }
     return NULL;
+}
+
+Channel *Server::createChannel(std::string name, Client *creator)
+{
+    Channel *channel = new Channel(name, creator);
+    channels.push_back(channel);
+    return (channel);
 }
 
 void Server::disconnectClient(int i)

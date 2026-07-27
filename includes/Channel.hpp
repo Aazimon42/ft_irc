@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:45:06 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/27 21:25:29 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/28 00:45:34 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ class Channel
         void broadcast(const std::string& message, Client *sender);
         std::string getPass();
         std::string getName();
+        std::string getTopic();
+        std::string getUsers();
         bool isInviteOnly();
         bool isRestrictedTopic();
         bool isOperator(Client *client);
