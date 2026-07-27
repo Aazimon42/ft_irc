@@ -6,10 +6,11 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:31:13 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/27 21:19:13 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/27 21:34:37 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sstream>
 #include "Server.hpp"
 
 Server::Server(int port, std::string password)
@@ -182,8 +183,6 @@ void Server::disconnectClient(int i)
     }
     pollfds.erase(pollfds.begin() + i);
 }
-
-#include <sstream>
 
 std::string intToString(int nb)
 {
