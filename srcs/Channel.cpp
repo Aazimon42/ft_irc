@@ -6,11 +6,12 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 16:11:39 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/08 17:14:53 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/27 21:27:23 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Channel.hpp"
+#include <algorithm>
 
 Channel::Channel(std::string name, Client* creator)
 {
@@ -40,6 +41,11 @@ void Channel::addClient(Client* client)
     clients.push_back(client);
 }
 
+void Channel::addInvited(Client* client)
+{
+    invited.push_back(client);
+}
+
 std::string Channel::getPass()
 {
     return password;
@@ -48,4 +54,24 @@ std::string Channel::getPass()
 std::string Channel::getName()
 {
     return name;
+}
+
+bool Channel::isInviteOnly()
+{
+    return invite_only;
+}
+
+bool Channel::isRestrictedTopic()
+{
+    return restricted_topic;
+}
+
+bool Channel::isOperator(Client* client)
+{
+    return std::find(operators.begin(), operators.end(), client) != operators.end();
+}
+
+bool Channel::isInChannel(Client* client)
+{
+    return std::find(clients.begin(), clients.end(), client) != clients.end();
 }

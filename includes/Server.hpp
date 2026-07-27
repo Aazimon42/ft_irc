@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:28:03 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/25 00:04:14 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/27 21:18:58 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ class Server
         void disconnectClient(int i);
         Client *getClientFromFd(int fd);
         Channel *getChannel(std::string name);
+        void Server::sendError(int fd, int errorCode, std::string nick, std::string param);
     private:
         int running;
         int fd;

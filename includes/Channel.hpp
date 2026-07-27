@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:45:06 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/08 17:11:59 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/27 21:25:29 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,14 @@ class Channel
         void removeClient(Client *client);
         void addOperator(Client *client);
         void removeOperator(Client *client);
+        void addInvited(Client *client);
         void broadcast(const std::string& message, Client *sender);
         std::string getPass();
         std::string getName();
+        bool isInviteOnly();
+        bool isRestrictedTopic();
+        bool isOperator(Client *client);
+        bool isInChannel(Client *client);
     private:
         bool invite_only;
         bool restricted_topic;
@@ -37,6 +42,7 @@ class Channel
         std::string password;
         std::vector<Client*> operators;
         std::vector<Client*> clients;
+        std::vector<Client*> invited;
 };
 
 #endif

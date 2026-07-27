@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:31:13 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/25 00:27:11 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/27 21:19:13 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,4 +181,102 @@ void Server::disconnectClient(int i)
         }
     }
     pollfds.erase(pollfds.begin() + i);
+}
+
+#include <sstream>
+
+std::string intToString(int nb)
+{
+    std::stringstream ss;
+    ss << nb;
+    return ss.str();
+}
+
+void Server::sendError(int fd, int errorCode, std::string nick, std::string param)
+{
+    std::string msg;
+
+    switch (errorCode)
+    {
+        case 401:
+            msg = param + " :No such nick/channel";
+            break;
+        case 403:
+            msg = param + " :No such channel";
+            break;
+        case 404:
+            msg = param + " :Cannot send to channel";
+            break;
+        case 411:
+            msg = ":No recipient given";
+            break;
+        case 412:
+            msg = ":No text to send";
+            break;
+        case 421:
+            msg = param + " :Unknown command";
+            break;
+        case 431:
+            msg = ":No nickname given";
+            break;
+        case 432:
+            msg = param + " :Erroneous nickname";
+            break;
+        case 433:
+            msg = param + " :Nickname is already in use";
+            break;
+        case 441:
+            msg = param + " :They aren't on that channel";
+            break;
+        case 442:
+            msg = param + " :You're not on that channel";
+            break;
+        case 443:
+            msg = param + " :is already on channel";
+            break;
+        case 451:
+            msg = ":You have not registered";
+            break;
+        case 461:
+            msg = param + " :Not enough parameters";
+            break;
+        case 462:
+            msg = ":You may not reregister";
+            break;
+        case 463:
+            msg = ":Your host isn't among the privileged";
+            break;
+        case 464:
+            msg = ":Password incorrect";
+            break;
+        case 471:
+            msg = param + " :Cannot join channel (+l)";
+            break;
+        case 472:
+            msg = param + " :is unknown mode char to me";
+            break;
+        case 473:
+            msg = param + " :Cannot join channel (+i)";
+            break;
+        case 474:
+            msg = param + " :Cannot join channel (+b)";
+            break;
+        case 475:
+            msg = param + " :Cannot join channel (+k)";
+            break;
+        case 476:
+            msg = param + " :Bad Channel Mask";
+            break;
+        case 481:
+            msg = ":Permission Denied- You're not an IRC operator";
+            break;
+        case 482:
+            msg = param + " :You're not channel operator";
+            break;
+        default:
+            msg = ":Unknown error";
+            break;
+    }
+    std::string full = ":server " + intToString(errorCode) + " " + nick + " " + msg + "\r\n";
+    send(fd, full.c_str(), full.length(), 0);
 }
