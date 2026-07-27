@@ -6,11 +6,12 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 00:00:00 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/24 23:31:51 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/28 01:15:15 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Commands/NickCommand.hpp"
+#include "Server.hpp"
 
 NickCommand::NickCommand(Server *server, Client *client, std::vector<std::string> args) : Command(server, client, args)
 {}
@@ -20,7 +21,12 @@ NickCommand::~NickCommand()
 
 void NickCommand::execute()
 {
-    (void)server;
-    (void)client;
-    (void)args;
+    if (args.size() < 2)
+    {
+        server->sendError(client->getFd(), 431, client->getNickname(), "");
+        return;
+    }
+    client->setNickname(args[1]);
+    std::cout << "[NICK] Set nickname to: [" << client->getNickname() << "]" << std::endl;
+    client->checkRegistration();
 }

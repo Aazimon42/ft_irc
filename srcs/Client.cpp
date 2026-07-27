@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 17:08:39 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/28 00:50:38 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/28 01:16:03 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,33 @@ int Client::getFd()
     return (this->fd);
 }
 
-void Client::join(std::string channelName, std::string key)
+void Client::setNickname(std::string nickname)
 {
-    Channel *channel = server->getChannel(channelName);
-    if (channel->getPass() == key)
+    this->nickname = nickname;
+}
+
+void Client::setUsername(std::string username)
+{
+    this->username = username;
+}
+
+std::string Client::getUsername()
+{
+    return (this->username);
+}
+
+std::string Client::getNickname()
+{
+    return (this->nickname);
+}
+
+void Client::checkRegistration()
+{
+    if (!this->nickname.empty() && !this->username.empty() && !this->registered)
     {
-        channel->addClient(this);
+        this->registered = true;
+        std::string msg = ":server 001 " + this->nickname + " :Welcome to the IRC server, "
+            + this->nickname + "!" + this->username + "@localhost\r\n";
+        send(this->fd, msg.c_str(), msg.length(), 0);
     }
-    //ajouter message d'erreur a envoyer au client
 }

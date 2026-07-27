@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:35:18 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/28 00:35:11 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/28 01:14:46 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,16 @@ class Client
         Client(int afd);
         ~Client();
         int getFd(void);
+        void setNickname(std::string nickname);
+        void setUsername(std::string username);
         std::string getUsername(void);
+        std::string getNickname(void);
+        void checkRegistration();
     private:
         int fd;
+        bool registered;
         std::string nickname;
         std::string username;
-        Server *server;
 };
 
 #endif
