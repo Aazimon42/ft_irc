@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:31:13 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 00:23:42 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 01:24:16 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void Server::handleClientData(int i)
 
 Command *Server::handle_input(int i, std::string todo)
 {
-    std::string commands[12] = {"JOIN", "PASS", "NICK", "USER", "QUIT", "PRIVMSG", "NOTICE", "MODE", "TOPIC", "INVITE", "KICK", "PART"};
+    std::string commands[11] = {"JOIN", "PASS", "NICK", "USER", "QUIT", "PRIVMSG", "MODE", "TOPIC", "INVITE", "KICK", "PART"};
     int command = 0;
     Client *client = getClientFromFd(pollfds[i].fd);
     std::vector<std::string> args = parsecmd(todo);
@@ -131,7 +131,7 @@ Command *Server::handle_input(int i, std::string todo)
         std::cout << "ARG " << j << " = " << args[j] << std::endl; 
         j++;
     }
-    while (command < 12)
+    while (command < 11)
     {
         if (commands[command] == args[0])
             break;
@@ -152,16 +152,14 @@ Command *Server::handle_input(int i, std::string todo)
         case (5):
             return new PrivmsgCommand(this, client, args);
         case (6):
-            return new NoticeCommand(this, client, args);
-        case (7):
             return new ModeCommand(this, client, args);
-        case (8):
+        case (7):
             return new TopicCommand(this, client, args);
-        case (9):
+        case (8):
             return new InviteCommand(this, client, args);
-        case (10):
+        case (9):
             return new KickCommand(this, client, args);
-        case (11):
+        case (10):
             return new PartCommand(this, client, args);
         default:
             std::cout << "Unknown command :"  << args[0] << std::endl;
@@ -206,6 +204,17 @@ Channel *Server::createChannel(std::string name, Client *creator)
     return (channel);
 }
 
+std::vector<Channel*> Server::getChannelsByClient(Client *client)
+{
+    std::vector<Channel*> clientChannels;
+    for (size_t i = 0; i < channels.size(); i++)
+    {
+        if (channels[i]->isInChannel(client))
+            clientChannels.push_back(channels[i]);
+    }
+    return clientChannels;
+}
+
 void Server::disconnectClient(int i)
 {
     int client_fd = pollfds[i].fd;
@@ -221,6 +230,30 @@ void Server::disconnectClient(int i)
         }
     }
     pollfds.erase(pollfds.begin() + i);
+}
+
+void Server::disconnectClient(Client *client)
+{
+    int client_fd = client->getFd();
+
+    close(client_fd);
+    for (size_t i = 0; i < pollfds.size(); i++)
+    {
+        if (pollfds[i].fd == client_fd)
+        {
+            pollfds.erase(pollfds.begin() + i);
+            break;
+        }
+    }
+    for (size_t j = 0; j < clients.size(); j++)
+    {
+        if (clients[j] == client)
+        {
+            clients.erase(clients.begin() + j);
+            break;
+        }
+    }
+    delete client;
 }
 
 std::string intToString(int nb)

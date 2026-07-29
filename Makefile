@@ -6,7 +6,7 @@
 #    By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/10 00:00:50 by edi-maio          #+#    #+#              #
-#    Updated: 2026/07/27 19:17:13 by malebrun         ###   ########.fr        #
+#    Updated: 2026/07/30 00:39:45 by edi-maio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,6 @@ SRCS = $(SRC_DIR)main.cpp \
         $(SRC_DIR)Commands/ModeCommand.cpp \
         $(SRC_DIR)Commands/TopicCommand.cpp \
         $(SRC_DIR)Commands/PartCommand.cpp \
-		$(SRC_DIR)Commands/NoticeCommand.cpp \
         $(SRC_DIR)Commands/InviteCommand.cpp \
         $(SRC_DIR)Commands/KickCommand.cpp
 

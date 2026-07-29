@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 16:11:39 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 00:23:40 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 01:20:14 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,21 @@ void Channel::addClient(Client* client)
 {
     if (!isInChannel(client))
         clients.push_back(client);
+}
+
+void Channel::removeClient(Client *client)
+{
+    if (isInChannel(client))
+    {
+        bool wasOperator = isOperator(client);
+
+        clients.erase(std::remove(clients.begin(), clients.end(), client), clients.end());
+        operators.erase(std::remove(operators.begin(), operators.end(), client), operators.end());
+
+        // If an operator left and there are still clients but no operators, promote the first client
+        if (wasOperator && operators.empty() && !clients.empty())
+            operators.push_back(clients.front());
+    }
 }
 
 void Channel::addInvited(Client* client)

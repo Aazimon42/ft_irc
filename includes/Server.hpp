@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:28:03 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/28 00:34:16 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 01:22:55 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # include "Commands/QuitCommand.hpp"
 # include "Commands/InviteCommand.hpp"
 # include "Commands/KickCommand.hpp"
-# include "Commands/NoticeCommand.hpp"
 # include "Channel.hpp"
 
 class Server
@@ -42,10 +41,12 @@ class Server
         void handleClientData(int i);
         Command *handle_input(int i, std::string todo);
         void disconnectClient(int i);
+        void disconnectClient(Client *client);
         Client *getClientFromFd(int fd);
         Client *getClientFromUser(std::string name);
         Channel *createChannel(std::string name, Client *creator);
         Channel *getChannel(std::string name);
+        std::vector<Channel*> getChannelsByClient(Client *client);
         void sendError(int fd, int errorCode, std::string nick, std::string param);
     private:
         int running;

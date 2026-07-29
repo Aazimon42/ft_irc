@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 00:00:00 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/24 23:31:51 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 00:45:42 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,5 @@ PassCommand::~PassCommand()
 
 void PassCommand::execute()
 {
-    (void)server;
-    (void)client;
-    (void)args;
+    std::cout << "[PASS] Password sent: [" << args[1] << "]" << std::endl;
 }
