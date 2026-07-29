@@ -12,6 +12,7 @@
 
 #include <sstream>
 #include "Server.hpp"
+#include "Client.hpp"
 
 Server::Server(int port, std::string password)
 {
@@ -76,7 +77,7 @@ void Server::acceptClient()
     if (client_fd < 0)  
         return ;
     fcntl(client_fd, F_SETFL, O_NONBLOCK);
-    Client *client = new Client(client_fd);
+    Client *client = new Client(client_fd, this);
     this->clients.push_back(client);
         struct pollfd pfd;
     pfd.fd = client_fd;
@@ -117,6 +118,10 @@ void Server::handleClientData(int i)
                 command->execute();
         }
 	}
+}
+std::string Server::get_password()
+{
+    return this->password;
 }
 
 Command *Server::handle_input(int i, std::string todo)

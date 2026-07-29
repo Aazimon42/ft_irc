@@ -31,6 +31,8 @@
 # include "Commands/NoticeCommand.hpp"
 # include "Channel.hpp"
 
+class Client;
+class Channel;
 class Server
 {
     public:
@@ -47,6 +49,7 @@ class Server
         Channel *createChannel(std::string name, Client *creator);
         Channel *getChannel(std::string name);
         void sendError(int fd, int errorCode, std::string nick, std::string param);
+        std::string get_password();
     private:
         int running;
         int fd;

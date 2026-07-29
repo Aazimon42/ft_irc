@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "Commands/PassCommand.hpp"
+#include "Server.hpp"
 
 PassCommand::PassCommand(Server *server, Client *client, std::vector<std::string> args) : Command(server, client, args)
 {}
@@ -22,5 +23,13 @@ void PassCommand::execute()
 {
     (void)server;
     (void)client;
-    (void)args;
+
+    if (this->args.size() < 2 || this->args[1].empty())
+    {
+        server->sendError(client->getFd(), 461, client->getNickname(), "PASS");
+        return;
+    }
+    client->setPassword(this->args[1]);
+    client->checkRegistration();
+
 }
