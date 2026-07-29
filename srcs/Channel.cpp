@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 16:11:39 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/28 01:21:56 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 00:23:40 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ Channel::Channel(std::string name, Client* creator)
 
 void Channel::broadcast(const std::string& message, Client* sender)
 {
-    (void)sender;
     for (std::vector<Client*>::iterator it = clients.begin(); it != clients.end(); ++it)
     {
         Client* client = *it;
-        send(client->getFd(), message.c_str(), message.length(), 0);
+        if (client != sender)
+            send(client->getFd(), message.c_str(), message.length(), 0);
     }
 }
 

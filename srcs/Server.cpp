@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:31:13 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/28 01:12:37 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 00:23:42 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void Server::acceptClient()
     pfd.revents = 0;
     this->pollfds.push_back(pfd);
     std::cout << "nouveau client"<< std::endl;
-    send(client_fd, ":server 001 Welcome to the IRC server\r\n", 36, 0);
 }
 
 void Server::handleClientData(int i)
