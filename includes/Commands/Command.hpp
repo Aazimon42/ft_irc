@@ -17,7 +17,7 @@
 # include <vector>
 
 class Server;
-
+class Client;
 class Command
 {
     public:

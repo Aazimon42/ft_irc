@@ -30,6 +30,8 @@
 # include "Commands/KickCommand.hpp"
 # include "Channel.hpp"
 
+class Client;
+class Channel;
 class Server
 {
     public:
@@ -48,6 +50,7 @@ class Server
         Channel *getChannel(std::string name);
         std::vector<Channel*> getChannelsByClient(Client *client);
         void sendError(int fd, int errorCode, std::string nick, std::string param);
+        std::string get_password();
     private:
         int running;
         int fd;

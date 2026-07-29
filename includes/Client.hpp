@@ -23,7 +23,7 @@ class Client
     public:
         std::string _inBuffer;
         Client();
-        Client(int afd);
+        Client(int afd, Server *server);
         ~Client();
         int getFd(void);
         void setNickname(std::string nickname);
@@ -31,11 +31,15 @@ class Client
         std::string getUsername(void);
         std::string getNickname(void);
         void checkRegistration();
+        void setPassword(std::string password);
+        std::string getPassword(void);
     private:
         int fd;
         bool registered;
         std::string nickname;
         std::string username;
+        std::string password;
+        Server *server;
 };
 
 #endif
