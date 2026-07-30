@@ -31,11 +31,16 @@ class Channel
         std::string getName();
         std::string getTopic();
         std::string getUsers();
+        void setPass(std::string pass);
+        void setMaxUsers(int max);
+        void setInviteOnly(bool invite_only);
+        void setRestrictedTopic(bool restricted_topic);
         bool isInviteOnly();
         bool isRestrictedTopic();
         bool isOperator(Client *client);
         bool isInChannel(Client *client);
         void setTopic(std::string topic);
+        int getMaxUsers();
     private:
         bool invite_only;
         bool restricted_topic;

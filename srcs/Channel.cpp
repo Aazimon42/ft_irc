@@ -115,3 +115,40 @@ void Channel::setTopic(std::string topic)
 {
     this->topic = topic;
 }
+
+void Channel::setPass(std::string pass)
+{
+    this->password = pass;
+}
+
+void Channel::setMaxUsers(int max)
+{
+    this->max_users = max;
+}
+
+void Channel::setInviteOnly(bool invite_only)
+{
+    this->invite_only = invite_only;
+}
+
+void Channel::setRestrictedTopic(bool restricted_topic)
+{
+    this->restricted_topic = restricted_topic;
+}
+
+void Channel::addOperator(Client* client)
+{
+    if (!isOperator(client))
+        operators.push_back(client);
+}
+
+void Channel::removeOperator(Client* client)
+{
+    operators.erase(std::remove(operators.begin(), operators.end(), client), operators.end());
+}
+
+int Channel::getMaxUsers()
+{
+    return max_users;
+}
+
