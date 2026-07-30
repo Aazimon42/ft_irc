@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 17:08:39 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 01:50:02 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 03:23:03 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ Client::Client()
 Client::Client(int afd, Server *server) : server(server)
 {
     this->fd = afd;
+    this->registered = false;
     this->nickname = "";
     this->username = "";
     this->password = "";

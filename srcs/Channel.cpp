@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 16:11:39 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 03:07:00 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 03:28:05 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ Channel::Channel(std::string name, Client* creator)
     operators.push_back(creator);
     max_users = 0;
     invite_only = false;
+    restricted_topic = false;
     topic = "";
     password = "";
 }

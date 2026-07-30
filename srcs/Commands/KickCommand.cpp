@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 00:00:00 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 02:50:46 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 03:35:12 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ void KickCommand::execute()
         server->sendError(client->getFd(), 441, client->getNickname(), args[2]);
         return;
     }
-    std::string message = ":" + client->getNickname() + " KICK " + args[1] + " " + args[2] + " :" + args[3] + "\r\n";
+    std::string message = ":" + client->getNickname() + " KICK " + args[1] + " " + args[2] + " :";
+    if (args.size() == 4)
+        message = message + args[3];
+    message = message + "\r\n";
     send(client->getFd(), message.c_str(), message.length(), 0);
     channel->broadcast(message, client);
     channel->removeClient(server->getClientFromNick(args[2]));

@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 00:00:00 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 00:23:47 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 03:15:11 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ PrivmsgCommand::~PrivmsgCommand()
 
 void PrivmsgCommand::execute()
 {
-    if (args.size() < 1)
+    if (args.size() < 2)
     {
         server->sendError(client->getFd(), 411, client->getNickname(), "");
         return;
     }
-    if (args.size() < 2 || args[1].empty())
+    if (args.size() < 3 || args[2].empty())
     {
         server->sendError(client->getFd(), 412, client->getNickname(), "");
         return;
@@ -40,7 +40,8 @@ void PrivmsgCommand::execute()
             server->sendError(client->getFd(), 404, client->getNickname(), target);
             return;
         }
-        std::string message = ":" + client->getNickname() + " PRIVMSG " + target + " :" + args[2] + "\r\n";
+        std::string message = ":" + client->getNickname() + "!" + client->getUsername() 
+            + "@localhost PRIVMSG " + target + " :" + args[2] + "\r\n";
         channel->broadcast(message, client);
     }
     else
@@ -51,7 +52,8 @@ void PrivmsgCommand::execute()
             server->sendError(client->getFd(), 401, client->getNickname(), target);
             return;
         }
-        std::string message = ":" + client->getNickname() + " PRIVMSG " + target + " :" + args[2] + "\r\n";
+        std::string message = ":" + client->getNickname() + "!" + client->getUsername() 
+            + "@localhost PRIVMSG " + target + " :" + args[2] + "\r\n";
         send(targetClient->getFd(), message.c_str(), message.length(), 0);
     }
 }

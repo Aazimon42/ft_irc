@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 16:11:40 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 02:32:40 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 03:49:45 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void JoinCommand::execute()
         if (i < keys.size())
             key = keys[i];
 
-        if (channelName.empty())
+        if (channelName.empty() || channelName[0] != '#')
         {
             server->sendError(client->getFd(), 476, client->getNickname(), channelName);
             continue;
