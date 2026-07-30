@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 16:11:39 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 03:28:05 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/31 01:04:45 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ Channel::Channel(std::string name, Client* creator)
     topic = "";
     password = "";
 }
+
+Channel::~Channel()
+{}
 
 void Channel::broadcast(const std::string& message, Client* sender)
 {

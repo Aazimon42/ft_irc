@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:28:03 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 02:07:39 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/31 00:47:06 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ class Server
         ~Server();
         void init();
         void run();
+        static void handleSignal(int sig);
         void acceptClient();
         void handleClientData(int i);
         Command *handle_input(int i, std::string todo);
@@ -52,7 +53,7 @@ class Server
         void sendError(int fd, int errorCode, std::string nick, std::string param);
         std::string get_password();
     private:
-        int running;
+        static bool running;
         int fd;
         int port;
         std::string password;

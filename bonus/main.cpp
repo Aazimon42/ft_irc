@@ -5,34 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/12 16:55:40 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/31 00:45:51 by edi-maio         ###   ########.fr       */
+/*   Created: 2026/07/30 23:58:24 by edi-maio          #+#    #+#             */
+/*   Updated: 2026/07/31 00:14:08 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.hpp"
-#include "Server.hpp"
-#include <csignal>
+#include "Bot.hpp"
+#include <iostream>
+#include <cstdlib>
 
-int main(int ac, char **av)
+int main(int argc, char **argv)
 {
-    if (ac != 3)
+    if (argc < 4)
     {
-        std::cerr << "Usage: ./ircserv <port> <password>" << std::endl;
-        return (1);
+        std::cerr << "Usage: " << argv[0] << " <port> <password> <channel>" << std::endl;
+        return 1;
     }
-    if (!parsing(av[1]))
-        return (1);
-    Server myServer(std::atoi(av[1]), av[2]);
-    try {
-        signal(SIGINT, Server::handleSignal);
-        myServer.init();
-        myServer.run();
-    }
-    catch (std::exception &e)
-    {
-        std::cerr << e.what() << std::endl;
-        return (1);
-    }
-    return (0);
+    Bot bot(std::atoi(argv[1]), argv[2], "Bot", argv[3]);
+    bot.registerCommands();
+    bot.run();
+    return 0;
 }

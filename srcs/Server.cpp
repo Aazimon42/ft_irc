@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:31:13 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 02:28:33 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/31 01:28:53 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,24 @@
 #include "Server.hpp"
 #include "Client.hpp"
 
+bool Server::running = false;
+
 Server::Server(int port, std::string password)
 {
-    this->running = 0;
     this->port = port;
     this->password = password;
 }
 Server::~Server()
-{}
+{
+    while (!clients.empty())
+        disconnectClient(clients[0]);
+    for (std::vector<Channel*>::iterator it = channels.begin(); it != channels.end(); it++)
+        delete *it;
+    close (fd);
+}
 void Server::init()
 {
-    this->running = 1;
+    Server::running = true;
     this->fd = socket(AF_INET, SOCK_STREAM, 0);
     if (fd == -1)
         throw IrcException("Error: Failed to create socket");
@@ -69,6 +76,12 @@ void Server::run()
                 disconnectClient(i);
         }
     }
+}
+
+void Server::handleSignal(int sig)
+{
+    (void)sig;
+    Server::running = false;
 }
 
 void Server::acceptClient()
