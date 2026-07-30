@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 00:00:00 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 02:35:11 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 02:37:12 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void PartCommand::execute()
         server->sendError(client->getFd(), 431, client->getNickname(), "");
         return;
     }
+    std::string quitMessage = "Client " + client->getNickname() + " has left the channel.";
+    if (args.size() == 3)
+        quitMessage = args[2];
     std::vector<std::string> channels = split(args[1], ',');
     for (size_t i = 0; i < channels.size(); ++i)
     {
@@ -47,5 +50,6 @@ void PartCommand::execute()
             continue;
         }
         channel->removeClient(client);
+        channel->broadcast(quitMessage, client);
     }
 }
