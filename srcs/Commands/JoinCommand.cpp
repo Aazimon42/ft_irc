@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 16:11:40 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 00:27:40 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 02:03:47 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void JoinCommand::execute()
         }
         channel->addClient(client);
         std::string msg = ":" + client->getNickname() + "!" + client->getUsername() + "@localhost JOIN " + channelName + "\r\n";
-        std::cout << "[JOIN RAW] [" << msg << "]" << std::endl;
+        channel->broadcast(msg, client);
         send(client->getFd(), msg.c_str(), msg.length(), 0);
         msg = ":server 332 " + client->getNickname() + " " + channelName + " :" + channel->getTopic() + "\r\n";
         send(client->getFd(), msg.c_str(), msg.length(), 0);

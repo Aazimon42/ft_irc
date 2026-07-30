@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 00:00:00 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 00:46:43 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 02:12:02 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ void NickCommand::execute()
     if (args.size() < 2)
     {
         server->sendError(client->getFd(), 431, client->getNickname(), "");
+        return;
+    }
+    std::string newNick = args[1];
+    if (server->getClientFromNick(newNick) != NULL)
+    {
+        server->sendError(client->getFd(), 433, "*", newNick);
         return;
     }
     client->setNickname(args[1]);

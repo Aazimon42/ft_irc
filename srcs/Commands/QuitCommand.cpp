@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 00:00:00 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 01:21:31 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 02:10:00 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ void QuitCommand::execute()
         channel->broadcast(msg, client);
         channel->removeClient(client);
     }
-    //server->disconnectClient(client);
+    server->disconnectClient(client);
 }

@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:31:13 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 01:24:16 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 02:28:00 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void Server::handleClientData(int i)
 	ssize_t	n;
 	std::string	line;
 	size_t		pos;
+    int fd = pollfds[i].fd;
 
 	n = recv(pollfds[i].fd, buffer, sizeof(buffer), 0);
 	if (n <= 0)
@@ -115,10 +116,16 @@ void Server::handleClientData(int i)
         {
 			Command *command = handle_input(i, line);
             if (command)
+            {
                 command->execute();
+                delete command;
+            }
+            if (!getClientFromFd(fd))
+                return;
         }
 	}
 }
+
 std::string Server::get_password()
 {
     return this->password;
@@ -182,11 +189,11 @@ Client *Server::getClientFromFd(int fd)
     return NULL;
 }
 
-Client *Server::getClientFromUser(std::string name)
+Client *Server::getClientFromNick(std::string name)
 {
     for (size_t i = 0; i < clients.size(); i++)
     {
-        if (clients[i]->getUsername() == name)
+        if (clients[i]->getNickname() == name)
             return clients[i];
     }
     return NULL;

@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:28:03 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 01:22:55 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/30 02:07:39 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ class Server
         void disconnectClient(int i);
         void disconnectClient(Client *client);
         Client *getClientFromFd(int fd);
-        Client *getClientFromUser(std::string name);
+        Client *getClientFromNick(std::string name);
         Channel *createChannel(std::string name, Client *creator);
         Channel *getChannel(std::string name);
         std::vector<Channel*> getChannelsByClient(Client *client);
