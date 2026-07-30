@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "Commands/KickCommand.hpp"
+#include "Server.hpp"
 
 KickCommand::KickCommand(Server *server, Client *client, std::vector<std::string> args) : Command(server, client, args)
 {}
@@ -20,7 +21,33 @@ KickCommand::~KickCommand()
 
 void KickCommand::execute()
 {
-    (void)server;
-    (void)client;
-    (void)args;
+    if (args.size() < 2)
+    {
+        server->sendError(client->getFd(), 461, client->getNickname(), "KICK");
+        return;
+    }
+    Channel *channel = server->getChannel(args[1]);
+    if (channel == NULL)
+    {
+        server->sendError(client->getFd(), 403, client->getNickname(), args[1]);
+        return;
+    }
+    if (channel->isInChannel(client) == false)
+    {
+        server->sendError(client->getFd(), 442, client->getNickname(), args[1]);
+        return;
+    }
+    if (channel->isOperator(client) == false)
+    {
+        server->sendError(client->getFd(), 482, client->getNickname(), args[1]);
+        return;
+    }
+    if (channel->isInChannel(server->getClientFromNick(args[2])) == false)
+    {
+        server->sendError(client->getFd(), 441, client->getNickname(), args[2]);
+        return;
+    }
+    channel->removeClient(server->getClientFromNick(args[2]));
+    std::string message = ":" + client->getNickname() + " KICK " +args[1] + " " + args[2] + " :" + args[3];
+    channel->broadcast(message, client);
 }
