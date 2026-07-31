@@ -71,7 +71,7 @@ void ModeCommand::execute()
     }
     if (args[2].empty() || (args[2][0] != '+' && args[2][0] != '-'))
     {
-        server->sendError(client->getFd(), 501, client->getNickname(), "");
+        server->sendError(client->getFd(), 472, client->getNickname(), "");
         return;
     }
     bool ispos = (args[2][0] == '+');
@@ -181,7 +181,7 @@ void ModeCommand::execute()
             }
         } else
         {
-            server->sendError(client->getFd(), 501, client->getNickname(), "");
+            server->sendError(client->getFd(), 472, client->getNickname(), "");
             i++;
             continue;
         }
