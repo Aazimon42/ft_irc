@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 00:00:00 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/30 02:37:12 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/31 01:51:08 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void PartCommand::execute()
 {
     if (args.size() < 2)
     {
-        server->sendError(client->getFd(), 431, client->getNickname(), "");
+        server->sendError(client->getFd(), 461, client->getNickname(), "PART");
         return;
     }
-    std::string quitMessage = "Client " + client->getNickname() + " has left the channel.";
+    std::string reason = "Leaving";
     if (args.size() == 3)
-        quitMessage = args[2];
+        reason = args[2];
     std::vector<std::string> channels = split(args[1], ',');
     for (size_t i = 0; i < channels.size(); ++i)
     {
@@ -49,7 +49,9 @@ void PartCommand::execute()
             server->sendError(client->getFd(), 442, client->getNickname(), channelName);
             continue;
         }
+        std::string partMsg = ":" + client->getNickname() + "!" + client->getUsername() 
+            + "@localhost PART " + channelName + " :" + reason + "\r\n";
+        channel->broadcast(partMsg, NULL);
         channel->removeClient(client);
-        channel->broadcast(quitMessage, client);
     }
 }

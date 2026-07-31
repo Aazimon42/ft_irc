@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:31:13 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/31 01:28:53 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/31 02:39:49 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,19 @@ void Server::handleClientData(int i)
 	n = recv(pollfds[i].fd, buffer, sizeof(buffer), 0);
 	if (n <= 0)
 	{
+        Client *client = getClientFromFd(pollfds[i].fd);
+        if (client)
+        {
+            std::string msg = ":" + client->getNickname() + "!" + client->getUsername() + "@localhost QUIT :"
+                + client->getNickname() + " has left the server." + "\r\n";
+            std::vector<Channel*> clientChannels = getChannelsByClient(client);
+            for (std::vector<Channel*>::iterator it = clientChannels.begin(); it != clientChannels.end(); ++it)
+            {
+                Channel *channel = *it;
+                channel->broadcast(msg, client);
+                channel->removeClient(client);
+            }
+        }
 		disconnectClient(i);
 		return ;
 	}

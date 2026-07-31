@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 16:11:39 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/31 01:04:45 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/31 01:40:20 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,11 @@ bool Channel::isOperator(Client* client)
 bool Channel::isInChannel(Client* client)
 {
     return std::find(clients.begin(), clients.end(), client) != clients.end();
+}
+
+bool Channel::isInvited(Client* client)
+{
+    return std::find(invited.begin(), invited.end(), client) != invited.end();
 }
 
 void Channel::setTopic(std::string topic)
