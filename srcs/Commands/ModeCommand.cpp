@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 00:00:00 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/31 01:41:53 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/07/31 02:55:23 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void ModeCommand::execute()
     }
     if (args[2].empty() || (args[2][0] != '+' && args[2][0] != '-'))
     {
-        server->sendError(client->getFd(), 472, client->getNickname(), "");
+        server->sendError(client->getFd(), 472, client->getNickname(), args[2].substr(0, 1));
         return;
     }
     bool ispos = (args[2][0] == '+');
@@ -181,7 +181,7 @@ void ModeCommand::execute()
             }
         } else
         {
-            server->sendError(client->getFd(), 472, client->getNickname(), "");
+            server->sendError(client->getFd(), 472, client->getNickname(), args[2].substr(i, 1));
             i++;
             continue;
         }
