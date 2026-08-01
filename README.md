@@ -175,11 +175,13 @@ helper, `Server::sendError(fd, code, nickname, arg)`, formats and sends them con
 ```
 .
 ├── Makefile
+├── bonus/
 ├── includes/     # headers (Server, Client, Channel, Command, ...)
 └── srcs/
     ├── main.cpp
     ├── Commands/ # one class per IRC command
     └── ...
+└── ...
 ```
 
 ## Resources
@@ -208,8 +210,3 @@ Specifically, AI was used to:
 - help diagnose C++ compilation and design problems, such as circular include chains
   between headers and the choice between storing references and pointers in containers;
 - review and rephrase parts of this README.
-
-## Authors
-
-- malebrun
-- edi-maio
