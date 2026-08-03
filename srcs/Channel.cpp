@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 16:11:39 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/31 01:40:20 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/08/03 18:07:06 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,5 +158,10 @@ void Channel::removeOperator(Client* client)
 int Channel::getMaxUsers()
 {
     return max_users;
+}
+
+int Channel::getClientCount()
+{
+    return clients.size();
 }
 

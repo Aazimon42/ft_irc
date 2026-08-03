@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 16:11:40 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/31 01:40:45 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/08/03 18:08:20 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ void JoinCommand::execute()
         Channel *channel = server->getChannel(channelName);
         if (!channel)
             channel = server->createChannel(channelName, client);
+        else if (channel->getMaxUsers() > 0 && channel->getClientCount() >= channel->getMaxUsers())
+        {
+            server->sendError(client->getFd(), 471, client->getNickname(), channelName);
+            continue;
+        }
         else if (channel->isInviteOnly() && !channel->isInvited(client))
         {
             server->sendError(client->getFd(), 473, client->getNickname(), channelName);

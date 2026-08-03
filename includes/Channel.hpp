@@ -6,7 +6,7 @@
 /*   By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 17:45:06 by edi-maio          #+#    #+#             */
-/*   Updated: 2026/07/31 01:39:58 by edi-maio         ###   ########.fr       */
+/*   Updated: 2026/08/03 18:06:59 by edi-maio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ class Channel
         bool isInvited(Client *client);
         void setTopic(std::string topic);
         int getMaxUsers();
+        int getClientCount();
     private:
         bool invite_only;
         bool restricted_topic;
